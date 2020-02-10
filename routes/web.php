@@ -22,3 +22,7 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+
+Route::get('/post/{id}', function ($id) {
+    return view('post', compact('id'));
+});

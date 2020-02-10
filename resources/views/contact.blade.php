@@ -2,7 +2,7 @@
 
 @section('header')
 
-  <header class="masthead" style="background-image: url('img/contact-bg.jpg')">
+  <header class="masthead" style="background-image: url('{{asset('img/contact-bg.jpg')}}')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
