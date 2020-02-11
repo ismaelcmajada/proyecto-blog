@@ -13,7 +13,7 @@
 
 Route::get('/', 'HomeController@index');
 
-Route::get('/{name}', 'HomeController@indexCategory');
+Route::get('/category/{name}', 'HomeController@indexCategory');
 
 Route::get('/about', function () {
     return view('about');
