@@ -11,6 +11,9 @@
             <h1>Blog Ismael</h1>
             <span class="subheading">Un blog general para buscar información.</span>
           </div>
+          @foreach( $arrayCategories as $key => $category )
+          <a href="{{ url('/').'/'.$category->name }}" class="btn btn-primary">{{ $category->name }}</a>
+          @endforeach
         </div>
       </div>
     </div>
@@ -35,8 +38,9 @@
           </a>
           <p class="post-meta">Publicado por
             <a href="{{ url('/author').'/'.$post->author_id }}">{{ $post->author->name }}</a>
-            el {{ date("d-m-Y", strtotime($post->created_at)) }}</p>
+            el {{ date("d-m-Y", strtotime($post->created_at)) }} </p>
         </div>
+      
         <hr>
         @endforeach
     

@@ -13,6 +13,8 @@
 
 Route::get('/', 'HomeController@index');
 
+Route::get('/{name}', 'HomeController@indexCategory');
+
 Route::get('/about', function () {
     return view('about');
 });
@@ -24,3 +26,4 @@ Route::get('/contact', function () {
 Route::get('/post/{id}', 'HomeController@getPost');
 
 Route::get('/author/{id}', 'HomeController@getAuthor');
+

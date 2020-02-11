@@ -5,12 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Author;
+use App\Category;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('index', array('arrayPosts'=>Post::all()));
+        $arrayPosts = Post::all();
+        $arrayCategories = Category::all();
+        return view('index', compact('arrayPosts', 'arrayCategories'));
+    }
+
+    public function indexCategory($name)
+    {
+        $categoryId = Category::where('name', $name)->firstOrFail()->id;
+        $arrayPosts = Post::all()->where('category_id', $categoryId);
+        $arrayCategories = Category::all();
+        return view('index', compact('arrayPosts', 'arrayCategories'));
     }
 
     public function getPost($id) {
