@@ -23,20 +23,22 @@
 <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
+        @foreach( $arrayPosts as $key => $post )
         <div class="post-preview">
-          <a href="{{url('/post/1')}}">
+          <a href="{{ url('/post').'/'.$post->id }}">
             <h2 class="post-title">
-              Man must explore, and this is exploration at its greatest
+              {{ $post->title }}
             </h2>
             <h3 class="post-subtitle">
-              Problems look mighty small from 150 miles up
+            {{ $post->subtitle }}
             </h3>
           </a>
           <p class="post-meta">Posted by
-            <a href="#">Start Bootstrap</a>
-            on September 24, 2019</p>
+            <a href="{{ url('/author').'/'.$post->author_id }}">{{ $post->author->name }}</a>
+            on {{ $post->created_at }}</p>
         </div>
         <hr>
+        @endforeach
     
         <!-- Pager -->
         <div class="clearfix">

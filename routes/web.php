@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'HomeController@index');
 
 Route::get('/about', function () {
     return view('about');
@@ -23,6 +21,4 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
-Route::get('/post/{id}', function ($id) {
-    return view('post', compact('id'));
-});
+Route::get('/post/{id}', 'HomeController@getPost');
