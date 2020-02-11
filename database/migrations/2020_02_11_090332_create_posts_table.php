@@ -22,7 +22,7 @@ class CreatePostsTable extends Migration
             $table->bigInteger('author_id');
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('categorys');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('author_id')->references('id')->on('authors');
         });
     }
