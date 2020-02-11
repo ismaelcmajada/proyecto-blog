@@ -22,3 +22,5 @@ Route::get('/contact', function () {
 });
 
 Route::get('/post/{id}', 'HomeController@getPost');
+
+Route::get('/author/{id}', 'HomeController@getAuthor');

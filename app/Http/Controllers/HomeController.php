@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
-use App\Auhtor;
+use App\Author;
 
 class HomeController extends Controller
 {
@@ -20,6 +20,7 @@ class HomeController extends Controller
 
     public function getAuthor($id) {
         $author = Author::findOrFail($id);
-        return view('author', compact('author'));
+        $arrayPosts = $author->posts()->get();
+        return view('author', compact('arrayPosts','author'));
     }
 }

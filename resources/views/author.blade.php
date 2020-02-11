@@ -9,11 +9,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>{{ $post->title }}</h1>
-            <h2 class="subheading">{{ $post->subtitle }}</h2>
-            <span class="meta">Publicado por
-              <a href="{{ url('/author').'/'.$post->author_id }}">{{ $post->author->name }}</a>
-              el {{ date("d-m-Y", strtotime($post->created_at)) }}</span>
+            <h1>{{ $author->name }}</h1>
           </div>
         </div>
       </div>
@@ -29,7 +25,19 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>{{ $post->content }}</p>
+          <p>{{ $author->description }}</p>
+          <h2>Publicaciones de este autor:</h2>
+          <hr>
+          @foreach( $arrayPosts as $key => $post )
+          <div class="post-preview">
+            <a href="{{ url('/post').'/'.$post->id }}">
+              <h3 class="post-subtitle">
+                {{ $post->title }}
+              </h2>
+            </a>
+          </div>
+          <hr>
+          @endforeach
         </div>
       </div>
     </div>

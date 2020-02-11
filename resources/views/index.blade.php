@@ -33,9 +33,9 @@
             {{ $post->subtitle }}
             </h3>
           </a>
-          <p class="post-meta">Posted by
+          <p class="post-meta">Publicado por
             <a href="{{ url('/author').'/'.$post->author_id }}">{{ $post->author->name }}</a>
-            on {{ $post->created_at }}</p>
+            el {{ date("d-m-Y", strtotime($post->created_at)) }}</p>
         </div>
         <hr>
         @endforeach

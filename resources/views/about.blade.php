@@ -8,8 +8,8 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1>About Me</h1>
-            <span class="subheading">This is what I do.</span>
+            <h1>Sobre Nosotros</h1>
+            <span class="subheading">Esto es lo que hacemos.</span>
           </div>
         </div>
       </div>
