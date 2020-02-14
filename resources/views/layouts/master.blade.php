@@ -11,7 +11,7 @@
   <title>Clean Blog - Start Bootstrap Theme</title>
 
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="{{asset('css/app.css')}}"> 
+  <link rel="stylesheet" href="{{secure_asset('css/app.css')}}"> 
 
   <!-- Custom fonts for this template -->
   <link href="{{secure_asset('fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
