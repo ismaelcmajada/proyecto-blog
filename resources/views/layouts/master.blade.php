@@ -14,12 +14,12 @@
   <link rel="stylesheet" href="{{asset('css/app.css')}}"> 
 
   <!-- Custom fonts for this template -->
-  <link href="{{secure-asset('fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{secure_asset('fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
   <!-- Custom styles for this template -->
-  <link href="{{secure-asset('css/clean-blog.min.css')}}" rel="stylesheet">
+  <link href="{{secure_asset('css/clean-blog.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -38,16 +38,16 @@
   @include('partials.footer')
 
   <!-- Bootstrap core JavaScript -->
-  <script src="{{secure-asset('jquery/jquery.min.js')}}"></script>
-  <script src="{{secure-asset('js/app.js')}}"></script>
+  <script src="{{secure_asset('jquery/jquery.min.js')}}"></script>
+  <script src="{{secure_asset('js/app.js')}}"></script>
 
   @if (\Request::is('contact'))  
-  <script src="{{secure-asset('js/jqBootstrapValidation.js')}}"></script>
-  <script src="{{secure-asset('js/contact_me.js')}}"></script>
+  <script src="{{secure_asset('js/jqBootstrapValidation.js')}}"></script>
+  <script src="{{secure_asset('js/contact_me.js')}}"></script>
   @endif
 
   <!-- Custom scripts for this template -->
-  <script src="{{secure-asset('js/clean-blog.min.js')}}"></script>
+  <script src="{{secure_asset('js/clean-blog.min.js')}}"></script>
 
 
 </body>
