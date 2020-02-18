@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Category;
+use App\Author;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -25,7 +27,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $arrayCategories = Category::all();
+        $arrayAuthors = Author::all();
+        return view('dashboard/postCreate', compact('arrayCategories', 'arrayAuthors'));
     }
 
     /**
@@ -36,7 +40,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post;
+        $post->title = $request->title;
+        $post->subtitle = $request->subtitle;
+        $post->content = $request->content;
+        $post->author_id = $request->author;
+        $post->category_id = $request->category;
+        $post->save();
+        return redirect()->action('PostController@index');
     }
 
     /**
@@ -58,7 +69,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $arrayCategories = Category::all();
+        return view('dashboard/postEdit', compact('post', 'arrayCategories'));
     }
 
     /**
@@ -70,7 +82,12 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $post->title = $request->title;
+        $post->subtitle = $request->subtitle;
+        $post->content = $request->content;
+        $post->category_id = $request->category;
+        $post->save();
+        return redirect()->action('PostController@index');
     }
 
     /**
@@ -81,6 +98,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->action('PostController@index');
     }
 }
