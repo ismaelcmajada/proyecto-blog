@@ -14,7 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $arrayPosts = Post::all();
+        return view('dashboard/posts', compact('arrayPosts'));
     }
 
     /**
