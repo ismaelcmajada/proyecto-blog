@@ -26,7 +26,7 @@
             <textarea class="form-control" name="content" id="content" cols="30"
                 rows="10">{{ $post->content }}</textarea>
         </div>
-        <input type="submit" class="btn btn-success" value="Crear">
+        <input type="submit" class="btn btn-success" value="Editar">
     </form>
 </div>
 

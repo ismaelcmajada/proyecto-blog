@@ -18,7 +18,10 @@ class CreateAuthorsTable extends Migration
             $table->string('name');
             $table->date('birth_date');
             $table->string('description');
+            $table->bigInteger('user_id')->unique();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
             'authors',
             'posts'
         ]);
+        //$this->call(UsersTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(AuthorsTableSeeder::class);
         $this->call(PostsTableSeeder::class);
-        // $this->call(UsersTableSeeder::class);
     }
 
     public function truncateTables(array $tables) {

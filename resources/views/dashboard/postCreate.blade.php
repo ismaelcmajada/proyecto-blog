@@ -12,23 +12,13 @@
             <label for="subtitle">Subtítulo</label>
             <input type="text" name="subtitle" id="subtitle" class="form-control" value="">
         </div>
-        <div class="form-group row">
-            <div class="col">
-                <label for="category">Categoría</label>
-                <select name="category" id="category" class="form-control">
-                    @foreach( $arrayCategories as $key => $category )
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col">
-                <label for="author">Autor</label>
-                <select name="author" id="author" class="form-control">
-                    @foreach( $arrayAuthors as $key => $author )
-                    <option value="{{ $author->id }}">{{ $author->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="category">Categoría</label>
+            <select name="category" id="category" class="form-control">
+                @foreach( $arrayCategories as $key => $category )
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group">
             <label for="content">Contenido</label>

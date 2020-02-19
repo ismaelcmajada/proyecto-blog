@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Category;
 use App\Author;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -16,7 +18,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $arrayPosts = Post::all();
+        $author = Auth::user()->author;
+        $arrayPosts = Post::where('author_id', $author->id)->orderBy('created_at', 'desc')->get();
+
         return view('dashboard/posts', compact('arrayPosts'));
     }
 
@@ -28,8 +32,7 @@ class PostController extends Controller
     public function create()
     {
         $arrayCategories = Category::all();
-        $arrayAuthors = Author::all();
-        return view('dashboard/postCreate', compact('arrayCategories', 'arrayAuthors'));
+        return view('dashboard/postCreate', compact('arrayCategories'));
     }
 
     /**
@@ -44,7 +47,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->subtitle = $request->subtitle;
         $post->content = $request->content;
-        $post->author_id = $request->author;
+        $post->author_id = Auth::user()->author->id;
         $post->category_id = $request->category;
         $post->save();
         return redirect()->action('PostController@index');
@@ -69,8 +72,14 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $arrayCategories = Category::all();
-        return view('dashboard/postEdit', compact('post', 'arrayCategories'));
+        $author = $author = Auth::user()->author;
+        if($post->author_id == $author->id) {
+            $arrayCategories = Category::all();
+            return view('dashboard/postEdit', compact('post', 'arrayCategories'));
+        } else {
+            return "No tienes permiso para eso.";
+        }
+        
     }
 
     /**
@@ -82,12 +91,17 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $post->title = $request->title;
-        $post->subtitle = $request->subtitle;
-        $post->content = $request->content;
-        $post->category_id = $request->category;
-        $post->save();
-        return redirect()->action('PostController@index');
+        $author = $author = Auth::user()->author;
+        if($post->author_id == $author->id) {
+            $post->title = $request->title;
+            $post->subtitle = $request->subtitle;
+            $post->content = $request->content;
+            $post->category_id = $request->category;
+            $post->save();
+            return redirect()->action('PostController@index');
+        } else {
+            return "No tienes permiso para eso.";
+        }
     }
 
     /**
@@ -98,7 +112,12 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
-        return redirect()->action('PostController@index');
+        $author = $author = Auth::user()->author;
+        if($post->author_id == $author->id) {
+            $post->delete();
+            return redirect()->action('PostController@index');
+        } else {
+            return "No tienes permiso para eso.";
+        }
     }
 }
