@@ -6,11 +6,11 @@
         @csrf
         <div class="form-group">
             <label for="title">Título</label>
-            <input type="text" name="title" id="title" class="form-control" value="">
+            <input type="text" name="title" id="title" class="form-control" value="{{old('title')}}">
         </div>
         <div class="form-group">
             <label for="subtitle">Subtítulo</label>
-            <input type="text" name="subtitle" id="subtitle" class="form-control" value="">
+            <input type="text" name="subtitle" id="subtitle" class="form-control" value="{{old('subtitle')}}">
         </div>
         <div class="form-group">
             <label for="category">Categoría</label>
@@ -30,7 +30,7 @@
         </div>
         <div class="form-group">
             <label for="content">Contenido</label>
-            <textarea class="form-control" name="content" id="content" cols="30" rows="10"></textarea>
+            <textarea class="form-control" name="content" id="content" cols="30" rows="10">{{old('content')}}</textarea>
         </div>
         <input type="submit" class="btn btn-success" value="Crear">
     </form>
