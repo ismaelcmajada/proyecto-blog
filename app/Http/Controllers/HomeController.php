@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function indexCategory($name)
     {
         $categoryId = Category::where('name', $name)->firstOrFail()->id;
-        $arrayPosts = Post::all()->where('category_id', $categoryId)->orderBy('created_at', 'desc')->get();
+        $arrayPosts = Post::where('category_id', $categoryId)->orderBy('created_at', 'desc')->get();
         $arrayCategories = Category::all();
         return view('index', compact('arrayPosts', 'arrayCategories'));
     }
