@@ -8,6 +8,9 @@
                 <th scope="col">#</th>
                 <th scope="col">Título</th>
                 <th scope="col">Categoría</th>
+                @if (Auth::user()->hasRole('admin'))
+                <th scope="col">Autor</th>
+                @endif
                 <th scope="col">Fecha</th>
                 <th colspan="2"><a href="{{action('PostController@create')}}" class="btn btn-success float-right" href="">Añadir</a></th>
             </tr>
@@ -18,6 +21,9 @@
                 <th scope="row">{{ $post->id }}</th>
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->category->name }}</td>
+                @if (Auth::user()->hasRole('admin'))
+                <td>{{ $post->author->name }}</td>
+                @endif
                 <td>{{ $post->created_at }}</td>
                 <td><a class="btn btn-primary" href="{{action('PostController@edit', $post)}}">Editar</a></td>
                 <td>

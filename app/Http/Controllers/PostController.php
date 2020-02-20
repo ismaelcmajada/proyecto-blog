@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Category;
 use App\Author;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,10 +17,16 @@ class PostController extends Controller
      */
     public function index()
     {
-        $author = Auth::user()->author;
-        $arrayPosts = Post::where('author_id', $author->id)->orderBy('created_at', 'desc')->get();
+        Auth::user()->authorizeRoles(['author', 'admin']);
 
-        return view('dashboard/posts', compact('arrayPosts'));
+        if(Auth::user()->hasRole('admin')) {
+            $arrayPosts = Post::orderBy('created_at', 'desc')->get();
+        } else {
+            $author = Auth::user()->author;
+            $arrayPosts = Post::where('author_id', $author->id)->orderBy('created_at', 'desc')->get();
+        }
+
+        return view('dashboard/post', compact('arrayPosts'));
     }
 
     /**
@@ -31,8 +36,11 @@ class PostController extends Controller
      */
     public function create()
     {
+        Auth::user()->authorizeRoles(['author', 'admin']);
+
         $arrayCategories = Category::all();
-        return view('dashboard/postCreate', compact('arrayCategories'));
+        $arrayAuthors = Author::all();
+        return view('dashboard/postCreate', compact('arrayCategories', 'arrayAuthors'));
     }
 
     /**
@@ -43,13 +51,22 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        Auth::user()->authorizeRoles(['author', 'admin']);
+
         $post = new Post;
         $post->title = $request->title;
         $post->subtitle = $request->subtitle;
         $post->content = $request->content;
-        $post->author_id = Auth::user()->author->id;
+
+        if(Auth::user()->hasRole('admin')) {
+            $post->author_id = $request->author;
+        } else {
+            $post->author_id = Auth::user()->author->id;
+        }
+
         $post->category_id = $request->category;
         $post->save();
+
         return redirect()->action('PostController@index');
     }
 
@@ -72,13 +89,12 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $author = $author = Auth::user()->author;
-        if($post->author_id == $author->id) {
-            $arrayCategories = Category::all();
-            return view('dashboard/postEdit', compact('post', 'arrayCategories'));
-        } else {
-            return "No tienes permiso para eso.";
-        }
+        Auth::user()->authorizeRoles(['author', 'admin']);
+        $post->verifyAuthor(Auth::user());
+
+        $arrayCategories = Category::all();
+        $arrayAuthors = Author::all();
+        return view('dashboard/postEdit', compact('post', 'arrayCategories', 'arrayAuthors'));
         
     }
 
@@ -91,17 +107,21 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $author = $author = Auth::user()->author;
-        if($post->author_id == $author->id) {
-            $post->title = $request->title;
-            $post->subtitle = $request->subtitle;
-            $post->content = $request->content;
-            $post->category_id = $request->category;
-            $post->save();
-            return redirect()->action('PostController@index');
-        } else {
-            return "No tienes permiso para eso.";
+        Auth::user()->authorizeRoles(['author', 'admin']);
+        $post->verifyAuthor(Auth::user());
+
+        $post->title = $request->title;
+        $post->subtitle = $request->subtitle;
+        $post->content = $request->content;
+        $post->category_id = $request->category;
+        if(Auth::user()->hasRole('admin')) {
+            $post->author_id = $request->author;
         }
+
+        $post->save();
+
+        return redirect()->action('PostController@index');
+
     }
 
     /**
@@ -112,12 +132,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $author = $author = Auth::user()->author;
-        if($post->author_id == $author->id) {
-            $post->delete();
-            return redirect()->action('PostController@index');
-        } else {
-            return "No tienes permiso para eso.";
-        }
+        Auth::user()->authorizeRoles(['author', 'admin']);
+        $post->verifyAuthor(Auth::user());
+
+        $post->delete();
+        return redirect()->action('PostController@index');
     }
 }

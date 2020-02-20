@@ -29,6 +29,6 @@ Route::get('/author/{id}', 'HomeController@getAuthor');
 
 Auth::routes(['register' => true]);
 
-Route::resource('/dashboard/posts', 'PostController')->middleware('auth');
+Route::resource('/dashboard/post', 'PostController')->middleware('auth');
 
 

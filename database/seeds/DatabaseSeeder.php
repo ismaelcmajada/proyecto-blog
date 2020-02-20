@@ -18,9 +18,12 @@ class DatabaseSeeder extends Seeder
             'users',
             'categories',
             'authors',
-            'posts'
+            'posts',
+            'roles',
+            'role_user'
         ]);
-        //$this->call(UsersTableSeeder::class);
+        $this->call(RoleTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(AuthorsTableSeeder::class);
         $this->call(PostsTableSeeder::class);

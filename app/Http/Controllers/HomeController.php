@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $arrayPosts = Post::all();
+        $arrayPosts = Post::orderBy('created_at', 'desc')->get();
         $arrayCategories = Category::all();
         return view('index', compact('arrayPosts', 'arrayCategories'));
     }
@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function indexCategory($name)
     {
         $categoryId = Category::where('name', $name)->firstOrFail()->id;
-        $arrayPosts = Post::all()->where('category_id', $categoryId);
+        $arrayPosts = Post::all()->where('category_id', $categoryId)->orderBy('created_at', 'desc')->get();
         $arrayCategories = Category::all();
         return view('index', compact('arrayPosts', 'arrayCategories'));
     }
@@ -31,7 +31,7 @@ class HomeController extends Controller
 
     public function getAuthor($id) {
         $author = Author::findOrFail($id);
-        $arrayPosts = $author->posts()->get();
+        $arrayPosts = $author->posts()->orderBy('created_at', 'desc')->get();
         return view('author', compact('arrayPosts','author'));
     }
 }

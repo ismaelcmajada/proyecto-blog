@@ -17,9 +17,17 @@
             <label for="category">Categoría</label>
             <select name="category" id="category" class="form-control">
                 @foreach( $arrayCategories as $key => $category )
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                <option value="{{ $category->id }}" @if ($post->category->id == $category->id) selected @endif>{{ $category->name }}</option>
                 @endforeach
             </select>
+            @if (Auth::user()->hasRole('admin'))
+            <label for="author">Autor</label>
+            <select name="author" id="author" class="form-control">
+                @foreach( $arrayAuthors as $key => $author )
+                <option value="{{ $author->id }}" @if ($post->author->id == $author->id) selected @endif>{{ $author->name }}</option>
+                @endforeach
+            </select>
+            @endif
         </div>
         <div class="form-group">
             <label for="content">Contenido</label>
