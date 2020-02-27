@@ -6,6 +6,7 @@ use App\User;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -18,7 +19,7 @@ class UserController extends Controller
     {
         Auth::user()->authorizeRoles(['admin']);
 
-        $arrayUsers = User::orderBy('created_at', 'desc')->get();
+        $arrayUsers = User::orderBy('created_at', 'desc')->paginate(10);
         $arrayRoles = Role::all();
 
         return view('dashboard/user', compact('arrayUsers', 'arrayRoles'));

@@ -7,6 +7,7 @@ use App\Category;
 use App\Author;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -20,10 +21,10 @@ class PostController extends Controller
         Auth::user()->authorizeRoles(['author', 'admin']);
 
         if(Auth::user()->hasRole('admin')) {
-            $arrayPosts = Post::orderBy('created_at', 'desc')->get();
+            $arrayPosts = Post::orderBy('created_at', 'desc')->paginate(10);
         } else {
             $author = Auth::user()->author;
-            $arrayPosts = Post::where('author_id', $author->id)->orderBy('created_at', 'desc')->get();
+            $arrayPosts = Post::where('author_id', $author->id)->orderBy('created_at', 'desc')->paginate(10);
         }
 
         $arrayCategories = Category::all();

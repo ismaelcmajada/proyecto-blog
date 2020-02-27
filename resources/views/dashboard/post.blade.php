@@ -104,6 +104,7 @@
             @endforeach
         </tbody>
     </table>
+    {{ $arrayPosts->links() }}
 </div>
 
 @stop

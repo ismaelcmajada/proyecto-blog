@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(App\User::class)->times(3)->create();
+        $users = factory(App\User::class)->times(15)->create();
 
         foreach ($users as $key => $user) {
             $user->roles()->attach(Role::find(3));

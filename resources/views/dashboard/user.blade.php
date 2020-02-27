@@ -49,11 +49,13 @@
                                             <p>{{ $role->description }}</p>
                                         </div>
                                         <div class="col">
-                                        @if($user->hasRole($role->name))
-                                            <a class="btn btn-danger" href="{{action('UserController@removeRole', ['user' => $user, 'role' => $role])}}">Quitar</a>
-                                        @else
-                                            <a class="btn btn-success" href="{{action('UserController@addRole', ['user' => $user, 'role' => $role])}}">Añadir</a>
-                                        @endif
+                                            @if($user->hasRole($role->name))
+                                            <a class="btn btn-danger"
+                                                href="{{action('UserController@removeRole', ['user' => $user, 'role' => $role])}}">Quitar</a>
+                                            @else
+                                            <a class="btn btn-success"
+                                                href="{{action('UserController@addRole', ['user' => $user, 'role' => $role])}}">Añadir</a>
+                                            @endif
                                         </div>
                                     </div>
                                     @endforeach
@@ -77,10 +79,11 @@
                     </form>
                 </td>
             </tr>
-</div>
+        </div>
 @endforeach
-</tbody>
+    </tbody>
 </table>
+{{ $arrayUsers->links() }}
 
 
 

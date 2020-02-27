@@ -12,7 +12,7 @@
             <span class="subheading">Un blog general para buscar información.</span>
           </div>
           @foreach( $arrayCategories as $key => $category )
-          <a href="{{ url('/category').'/'.$category->name }}" class="btn btn-primary">{{ $category->name }}</a>
+          <a href="{{ url('/category').'/'.$category->name }}" class="btn mt-2 btn-primary">{{ $category->name }}</a>
           @endforeach
         </div>
       </div>
@@ -46,7 +46,7 @@
     
         <!-- Pager -->
         <div class="clearfix">
-          <a class="btn btn-primary float-right" href="#">Anteriores &rarr;</a>
+          {{ $arrayPosts->links() }}
         </div>
       </div>
     </div>

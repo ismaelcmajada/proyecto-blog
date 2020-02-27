@@ -38,6 +38,7 @@
           </div>
           <hr>
           @endforeach
+          {{ $arrayPosts->links() }}
         </div>
       </div>
     </div>
