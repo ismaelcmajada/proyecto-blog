@@ -26,7 +26,9 @@ class PostController extends Controller
             $arrayPosts = Post::where('author_id', $author->id)->orderBy('created_at', 'desc')->get();
         }
 
-        return view('dashboard/post', compact('arrayPosts'));
+        $arrayCategories = Category::all();
+
+        return view('dashboard/post', compact('arrayPosts', 'arrayCategories'));
     }
 
     /**

@@ -37,6 +37,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         @if (Auth::user()->hasRole('admin'))
                         <a class="dropdown-item" href="{{ url('/dashboard/post') }}">Publicaciones</a>
+                        <a class="dropdown-item" href="{{ url('/dashboard/user') }}">Usuarios</a>
                         @elseif (Auth::user()->hasRole('author'))
                         <a class="dropdown-item" href="{{ url('/dashboard/post') }}">Mis publicaciones</a>
                         @endif

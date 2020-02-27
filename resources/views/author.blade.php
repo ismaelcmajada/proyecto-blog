@@ -25,7 +25,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>{{ $author->description }}</p>
+          <p>{!! $author->description !!}</p>
           <h2>Publicaciones de este autor:</h2>
           <hr>
           @foreach( $arrayPosts as $key => $post )

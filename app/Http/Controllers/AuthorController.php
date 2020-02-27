@@ -3,28 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Author;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(User $user)
     {
-        //
+        Auth::user()->authorizeRoles(['admin']);
+
+        return view('dashboard/authorCreate', compact('user'));
     }
 
     /**
@@ -33,31 +27,19 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
-        //
-    }
+        Auth::user()->authorizeRoles(['admin']);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Author  $author
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Author $author)
-    {
-        //
-    }
+        $author = new Author;
+        $author->name = $request->name;
+        $author->description = $request->description;
+        $author->user_id = $user->id;
+        $author->save();
+        $user->roles()->attach(2);
+        $user->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Author  $author
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Author $author)
-    {
-        //
+        return redirect()->action('UserController@index');
     }
 
     /**
@@ -69,7 +51,14 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
-        //
+        Auth::user()->authorizeRoles(['admin']);
+
+        $author->name = $request->nombre;
+        $author->description = $request->description;
+    
+        $author->save();
+
+        return redirect()->action('UserController@index');
     }
 
     /**
@@ -80,6 +69,10 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        //
+        Auth::user()->authorizeRoles(['admin']);
+
+        $author->delete();
+
+        return redirect()->action('UserController@index');
     }
 }

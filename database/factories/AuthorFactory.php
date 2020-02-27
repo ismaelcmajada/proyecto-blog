@@ -15,7 +15,6 @@ $factory->define(Author::class, function (Faker $faker) {
     $user->save();
     return [
         'name' => $user->name,
-        'birth_date' => now(),
         'description' => $faker->realText(),
 
         'user_id' => $user->id
