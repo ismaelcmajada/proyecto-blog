@@ -48,12 +48,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany('App\Role')->withTimestamps();
     }
 
+    //Autoriza los roles pasado por parámetro en el método que llamemos.
     public function authorizeRoles($roles)
     {
         abort_unless($this->hasAnyRole($roles), 401);
         return true;
     }
     
+    //Comprobamos si el usuario tiene los roles pasados por parámetro.
     public function hasAnyRole($roles)
     {
         if (is_array($roles)) {
@@ -70,6 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
+    //Comprobamos si el usuario tiene el rol pasado por parámetro.
     public function hasRole($role)
     {
         if ($this->roles()->where('name', $role)->first()) {

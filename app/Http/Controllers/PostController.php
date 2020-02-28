@@ -20,17 +20,21 @@ class PostController extends Controller
      */
     public function index()
     {
+
+        //Autorizamos a los usuarios con los roles especificados.
+
         Auth::user()->authorizeRoles(['author', 'admin']);
 
         if(Auth::user()->hasRole('admin')) {
-            $arrayPosts = Post::orderBy('created_at', 'desc')->paginate(10);
+            $arrayPosts = Post::orderBy('created_at', 'desc')->paginate(10); //En caso de ser admin, devolvemos todos los posts.
         } else {
             $author = Auth::user()->author;
-            $arrayPosts = Post::where('author_id', $author->id)->orderBy('created_at', 'desc')->paginate(10);
+            $arrayPosts = Post::where('author_id', $author->id)->orderBy('created_at', 'desc')->paginate(10); //En caso contrario devolvemos solos los posts del autor.
         }
 
-        $arrayCategories = Category::all();
+        //Devolvemos la vista con los arrays correspondientes.
 
+        $arrayCategories = Category::all();
         return view('dashboard/post', compact('arrayPosts', 'arrayCategories'));
     }
 
@@ -41,6 +45,9 @@ class PostController extends Controller
      */
     public function create()
     {
+
+        //Autorizamos a los usuarios con los roles especificados.
+
         Auth::user()->authorizeRoles(['author', 'admin']);
 
         $arrayCategories = Category::all();
@@ -56,11 +63,18 @@ class PostController extends Controller
      */
     public function store(PostFormRequest $request)
     {
+
+        //Autorizamos a los usuarios con los roles especificados.
+
         Auth::user()->authorizeRoles(['author', 'admin']);
+
+        //Guardamos el nuevo registro.
 
         $post = new Post;
         $post->title = $request->title;
         $post->subtitle = $request->subtitle;
+
+        //Guardamos la imagen
 
         if ($request->hasFile('imagen')) {
             if ($request->file('imagen')->isValid()) {
@@ -73,14 +87,18 @@ class PostController extends Controller
 
         $post->content = $request->content;
 
+        //En caso de ser administrador, el autor se manda por el formulario.
+
         if(Auth::user()->hasRole('admin')) {
             $post->author_id = $request->author;
-        } else {
+        } else { //En caso contrario el autor es el propio usuario.
             $post->author_id = Auth::user()->author->id;
         }
 
         $post->category_id = $request->category;
         $post->save();
+
+        //Devolvemos la vista.
 
         return redirect()->action('PostController@index');
     }
@@ -93,8 +111,16 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+
+        //Autorizamos a los usuarios con los roles especificados.
+
         Auth::user()->authorizeRoles(['author', 'admin']);
+
+        //Verificamos que el usuario es el autor del post.
+
         $post->verifyAuthor(Auth::user());
+
+        //Devolvemos la vista con los arrays correspondientes.
 
         $arrayCategories = Category::all();
         $arrayAuthors = Author::all();
@@ -111,16 +137,25 @@ class PostController extends Controller
      */
     public function update(PostFormRequest $request, Post $post)
     {
+        //Autorizamos a los usuarios con los roles especificados.
+
         Auth::user()->authorizeRoles(['author', 'admin']);
+
+        //Verificamos que el usuario es el autor del post.
+
         $post->verifyAuthor(Auth::user());
+
+        //Modificamos los campos del registro.
 
         $post->title = $request->title;
         $post->subtitle = $request->subtitle;
 
+        //Guardamos la nueva imagen.
+
         if ($request->hasFile('imagen')) {
             if ($request->file('imagen')->isValid()) {
 
-                Storage::disk('public')->delete($post->imagen);
+                Storage::disk('public')->delete($post->imagen); //Borramos la anterior imagen que tuviera el post.
         
                 $path = $request->imagen->store('images', 'public');
                 $post->imagen = $path;
@@ -130,11 +165,16 @@ class PostController extends Controller
 
         $post->content = $request->content;
         $post->category_id = $request->category;
+
+        //En caso de ser el usuario administrador, el autor se define a través del formulario.
+
         if(Auth::user()->hasRole('admin')) {
             $post->author_id = $request->author;
         }
 
         $post->save();
+
+        //Devolvemos la vista
 
         return redirect()->action('PostController@index');
 
@@ -148,12 +188,24 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        //Autorizamos a los usuarios con los roles especificados.
+
         Auth::user()->authorizeRoles(['author', 'admin']);
+
+        //Verificamos que el usuario es el autor del post.
+
         $post->verifyAuthor(Auth::user());
+
+        //Eliminamos la imagen del post.
 
         Storage::disk('public')->delete($post->imagen);
 
+        //Eliminamos el registro.
+
         $post->delete();
+
+        //Devolvemos la vista.
+
         return redirect()->action('PostController@index');
     }
 }

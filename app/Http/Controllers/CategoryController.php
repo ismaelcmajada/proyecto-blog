@@ -18,12 +18,19 @@ class CategoryController extends Controller
      */
     public function store(CategoryFormRequest $request)
     {
+
+        //Autorizamos a los usuarios con los roles especificados.
+
         Auth::user()->authorizeRoles(['admin']);
+
+        //Guardamos el nuevo registro.
 
         $category = new Category;
         $category->name = $request->nombre;
        
         $category->save();
+
+        //Devolvemos la vista
 
         return redirect()->action('PostController@index');
     }
@@ -37,11 +44,17 @@ class CategoryController extends Controller
      */
     public function update(CategoryFormRequest $request, Category $category)
     {
+        //Autorizamos a los usuarios con los roles especificados.
+
         Auth::user()->authorizeRoles(['admin']);
+
+        //Modificamos los campos del registro.
 
         $category->name = $request->nombre;
        
         $category->save();
+
+        //Devolvemos la vista.
 
         return redirect()->action('PostController@index');
     }
@@ -54,9 +67,15 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        //Autorizamos a los usuarios con los roles especificados.
+
         Auth::user()->authorizeRoles(['admin']);
 
+        //Eliminamos el registro.
+
         $category->delete();
+
+        //Devolvemos la vista.
 
         return redirect()->action('PostController@index');
     }

@@ -3,7 +3,14 @@
 @section('content')
 
 <div class="container">
-    <h2>Datos de usuario</h2>
+    <div class="row">
+        <div class="col">
+            <h2>Datos de usuario</h2>
+        </div>
+        <div class="col">
+            <a href="{{url()->previous()}}" class="btn btn-primary" >< Volver</a>
+        </div>
+    </div>
 
     @if ($errors->any())
 

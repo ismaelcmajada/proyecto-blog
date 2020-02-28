@@ -2,6 +2,14 @@
 
 @section('content')
 <div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>Crear autor</h2>
+        </div>
+        <div class="col">
+            <a href="{{url()->previous()}}" class="btn btn-primary" >< Volver</a>
+        </div>
+    </div>
 
     @if ($errors->any())
 
