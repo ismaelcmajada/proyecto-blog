@@ -26,26 +26,32 @@ Route::get('/author/{id}', 'HomeController@getAuthor');
 
 //Rutas del dashboard
 
-Auth::routes();
+Auth::routes(['verify' => 'true']);
 
-//Rutas de publicaciones
+Route::group(['middleware' => 'verified'], function () {
 
-Route::resource('/dashboard/post', 'PostController')->middleware('auth');
+    //Rutas de publicaciones
 
-//Rutas de usuarios
+    Route::resource('/dashboard/post', 'PostController')->middleware('auth');
 
-Route::resource('/dashboard/user', 'UserController')->middleware('auth');
-Route::get('/dashboard/user/{user}/addrole/{role}', 'UserController@addRole')->middleware('auth');
-Route::get('/dashboard/user/{user}/removerole/{role}', 'UserController@removeRole')->middleware('auth');
+    //Rutas de usuarios
 
-//Rutas de autores
+    Route::resource('/dashboard/user', 'UserController')->middleware('auth');
+    Route::get('/dashboard/user/{user}/addrole/{role}', 'UserController@addRole')->middleware('auth');
+    Route::get('/dashboard/user/{user}/removerole/{role}', 'UserController@removeRole')->middleware('auth');
 
-Route::get('/dashboard/author/create/{user}', 'AuthorController@create')->middleware('auth');
-Route::post('/dashboard/author/store/{user}', 'AuthorController@store')->middleware('auth');
-Route::put('/dashboard/author/{author}/update', 'AuthorController@update')->middleware('auth');
-Route::delete('/dashboard/author/{author}/delete', 'AuthorController@destroy')->middleware('auth');
+    //Rutas de autores
 
-//Rutas de categorías
+    Route::get('/dashboard/author/create/{user}', 'AuthorController@create')->middleware('auth');
+    Route::post('/dashboard/author/store/{user}', 'AuthorController@store')->middleware('auth');
+    Route::put('/dashboard/author/{author}/update', 'AuthorController@update')->middleware('auth');
+    Route::delete('/dashboard/author/{author}/delete', 'AuthorController@destroy')->middleware('auth');
 
-Route::resource('/dashboard/category', 'CategoryController')->middleware('auth');
+    //Rutas de categorías
+
+    Route::resource('/dashboard/category', 'CategoryController')->middleware('auth');
+
+});
+
+
 
