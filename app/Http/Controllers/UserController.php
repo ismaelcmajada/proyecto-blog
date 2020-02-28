@@ -7,6 +7,8 @@ use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\UserFormRequest;
+
 
 class UserController extends Controller
 {
@@ -47,7 +49,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserFormRequest $request, User $user)
     {
         Auth::user()->authorizeRoles(['admin']);
 
@@ -88,7 +90,7 @@ class UserController extends Controller
 
         if (!$user->hasRole($role->name)) {
             
-            if($role->name == "author") {
+            if($role->name == "author" && !$user->author) {
                 return redirect()->action('AuthorController@create', $user);
             }
 

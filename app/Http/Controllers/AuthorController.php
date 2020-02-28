@@ -6,6 +6,7 @@ use App\Author;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AuthorFormRequest;
 
 class AuthorController extends Controller
 {
@@ -27,12 +28,12 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
+    public function store(AuthorFormRequest $request, User $user)
     {
         Auth::user()->authorizeRoles(['admin']);
 
         $author = new Author;
-        $author->name = $request->name;
+        $author->name = $request->nombre;
         $author->description = $request->description;
         $author->user_id = $user->id;
         $author->save();
@@ -49,7 +50,7 @@ class AuthorController extends Controller
      * @param  \App\Author  $author
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Author $author)
+    public function update(AuthorFormRequest $request, Author $author)
     {
         Auth::user()->authorizeRoles(['admin']);
 

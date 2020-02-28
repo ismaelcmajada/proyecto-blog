@@ -4,6 +4,22 @@
 <div class="container">
     <h2>Publicaciones</h2>
 
+    @if ($errors->any())
+
+    <div class="row justify-content-center">
+        <div class="col-sm-7">
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @endif
+
     <!-- Modal -->
     <div class="modal fade" id="categorias" tabindex="-1" role="dialog" aria-labelledby="as" aria-hidden="true">
         <div class="modal-dialog" category="document">

@@ -8,6 +8,8 @@ use App\Author;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\PostFormRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -52,13 +54,23 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostFormRequest $request)
     {
         Auth::user()->authorizeRoles(['author', 'admin']);
 
         $post = new Post;
         $post->title = $request->title;
         $post->subtitle = $request->subtitle;
+
+        if ($request->hasFile('imagen')) {
+            if ($request->file('imagen')->isValid()) {
+        
+                $path = $request->imagen->store('images', 'public');
+                $post->imagen = $path;
+                
+            }
+        }
+
         $post->content = $request->content;
 
         if(Auth::user()->hasRole('admin')) {
@@ -71,17 +83,6 @@ class PostController extends Controller
         $post->save();
 
         return redirect()->action('PostController@index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
     }
 
     /**
@@ -108,13 +109,25 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostFormRequest $request, Post $post)
     {
         Auth::user()->authorizeRoles(['author', 'admin']);
         $post->verifyAuthor(Auth::user());
 
         $post->title = $request->title;
         $post->subtitle = $request->subtitle;
+
+        if ($request->hasFile('imagen')) {
+            if ($request->file('imagen')->isValid()) {
+
+                Storage::disk('public')->delete($post->imagen);
+        
+                $path = $request->imagen->store('images', 'public');
+                $post->imagen = $path;
+                
+            }
+        }
+
         $post->content = $request->content;
         $post->category_id = $request->category;
         if(Auth::user()->hasRole('admin')) {
@@ -137,6 +150,8 @@ class PostController extends Controller
     {
         Auth::user()->authorizeRoles(['author', 'admin']);
         $post->verifyAuthor(Auth::user());
+
+        Storage::disk('public')->delete($post->imagen);
 
         $post->delete();
         return redirect()->action('PostController@index');

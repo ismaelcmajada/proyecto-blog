@@ -12,7 +12,7 @@
             <span class="subheading">Un blog general para buscar información.</span>
           </div>
           @foreach( $arrayCategories as $key => $category )
-          <a href="{{ url('/category').'/'.$category->name }}" class="btn mt-2 btn-primary">{{ $category->name }}</a>
+          <a href="{{ url('/category').'/'.$category->name }}" class="btn mt-2 mt-md-0 btn-primary">{{ $category->name }}</a>
           @endforeach
         </div>
       </div>

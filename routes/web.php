@@ -14,19 +14,14 @@
 //Rutas de la parte pública
 
 Route::get('/', 'HomeController@index');
-
 Route::get('/category/{name}', 'HomeController@indexCategory');
-
 Route::get('/about', function () {
     return view('about');
 });
-
 Route::get('/contact', function () {
     return view('contact');
 });
-
 Route::get('/post/{id}', 'HomeController@getPost');
-
 Route::get('/author/{id}', 'HomeController@getAuthor');
 
 //Rutas del dashboard

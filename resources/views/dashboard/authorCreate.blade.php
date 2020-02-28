@@ -2,11 +2,28 @@
 
 @section('content')
 <div class="container">
+
+    @if ($errors->any())
+
+    <div class="row justify-content-center">
+        <div class="col-sm-7">
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @endif
+
     <form action="{{action('AuthorController@store', $user)}}" method="post">
         @csrf
         <div class="form-group">
             <label for="name">Nombre</label>
-            <input type="text" name="name" id="name" class="form-control" value="{{ $user->name }}">
+            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $user->name }}">
         </div>
         <div class="form-group">
             <label for="description">Descripción</label>

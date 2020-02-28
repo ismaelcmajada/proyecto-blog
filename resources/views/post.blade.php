@@ -3,7 +3,7 @@
 @section('header')
 
   <!-- Page Header -->
-  <header class="masthead">
+  <header class="masthead" style="background-image: url('{{asset('storage/'.$post->imagen)}}')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">

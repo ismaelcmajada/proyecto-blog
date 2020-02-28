@@ -2,7 +2,24 @@
 
 @section('content')
 <div class="container">
-    <form action="{{action('PostController@store')}}" method="post">
+
+    @if ($errors->any())
+
+    <div class="row justify-content-center">
+        <div class="col-sm-7">
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @endif
+
+    <form action="{{action('PostController@store')}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="title">Título</label>
@@ -11,6 +28,10 @@
         <div class="form-group">
             <label for="subtitle">Subtítulo</label>
             <input type="text" name="subtitle" id="subtitle" class="form-control" value="{{old('subtitle')}}">
+        </div>
+        <div class="form-group">
+            <label for="imagen">Imagen</label>
+            <input type="file" name="imagen" id="imagen">
         </div>
         <div class="form-group">
             <label for="category">Categoría</label>
