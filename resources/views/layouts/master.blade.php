@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Clean Blog - Start Bootstrap Theme</title>
+  <title>Blog Ismael</title>
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{{asset('css/app.css')}}"> 
