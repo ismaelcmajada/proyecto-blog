@@ -27,6 +27,7 @@
 
     @endif
 
+    @if (Auth::user()->hasRole('admin'))
     <!-- Modal -->
     <div class="modal fade" id="categorias" tabindex="-1" role="dialog" aria-labelledby="as" aria-hidden="true">
         <div class="modal-dialog" category="document">
@@ -87,6 +88,7 @@
             </div>
         </div>
     </div>
+    @endif
     <table class="table table-striped table-hover">
         <thead class="thead-dark">
             <tr>
@@ -97,8 +99,13 @@
                 <th scope="col">Autor</th>
                 @endif
                 <th scope="col">Fecha</th>
-                <th scope="col"><button class="btn btn-primary" data-toggle="modal"
-                        data-target="#categorias">Categorías</button></th>
+                
+                <th scope="col">
+                @if (Auth::user()->hasRole('admin'))
+                <button class="btn btn-primary" data-toggle="modal" data-target="#categorias">Categorías</button>
+                @endif
+                </th>
+                
                 <th scope="col"><a href="{{action('PostController@create')}}" class="btn btn-success float-right"
                         href="">Añadir</a></th>
             </tr>

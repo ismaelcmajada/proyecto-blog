@@ -27,7 +27,6 @@ class PostFormRequest extends FormRequest
             'title' => 'required|max:200',
             'subtitle' => 'required|max:200',
             'content' => 'required',
-            'author' => 'required',
             'category' => 'required'
         ];
     }
@@ -42,8 +41,6 @@ class PostFormRequest extends FormRequest
             'subtitle.max' => 'El subtítulo es demasiado largo',
 
             'content.required' => 'El contenido es obligatorio',
-
-            'author.required' => 'El autor es obligatorio.',
 
             'category.required' => 'La categoría es obligatorio.',
         ];
